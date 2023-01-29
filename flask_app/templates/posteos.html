@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingreso de Usuario</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/flask_app/static/css/style.css">
+
+</head>
+
+<body>
+    <div class="btn-group btn-group-justified-sm">
+        <a href="/inisesion" class="btn btn-info">Cerrar Sesión {{user.first_name}}</a>
+    </div>
+    <h1 class="text-decoration-none">Bienvenido a tu Página {{user.first_name}} {{user.last_name}}!!!</h1>
+    <form action="/crear/posteo" method="post" class="col-6 mx-auto">
+
+            {% with messages = get_flashed_messages(category_filter=['register']) %}
+            {% if messages %}
+            <div class="alert alert-danger" role="alert">
+                <strong>ATENCIÓN!!!!</strong>
+                {% for message in messages %}
+                <p>{{message}}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+            <div class="">
+              <p><textarea name="posteo" class="form-control" placeholder="Postee aqui"></textarea>
+            <input type="submit" value="Postear" class="btn btn-success"></p>
+            </div>
+    </form>
+    <hr>    
+    <div class="cuadro2">
+                    {% for posteo in poster %}
+                       
+                    <div class="cuadro2">
+                        {{posteo.posteo}}{{posteo.first_name}}
+                   
+                    </div>
+                    <div>
+                        <a href="/posteo/megusta/{{user.id }}" name="megusta" class="btn btn-success">Me gusta</a>
+                        {% if posteo.user_id == session.user_id %}
+                        <a href="/like/eliminar/{{user.id }}" name="megusta" class="btn btn-success">No me gusta</a>
+                        <a href="/posteo/eliminar/{{posteo.id }}" name="eliminar" class="btn-danger">ELIMINAR</a>
+                        <label for="likecant">like.cant_gusta</label>
+                        {% endif %}</th>
+                        <a  href="/posteo/{{posteo.user_id}}">Mostrar</a>
+                       </div>
+
+                    {% endfor %}
+        </div>
+    
+</body>
+
+</html>
